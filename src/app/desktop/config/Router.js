@@ -1,5 +1,5 @@
 import Router from 'vue-router'
-// import Helper from '@/utils/Helper'
+import Helper from '@/utils/Helper'
 import Vue from 'vue'
 Vue.use(Router)
 
@@ -11,23 +11,22 @@ Vue.use(Router)
 // import { routes } from './SubSite'
 const base = [
   {
-    path: '/test',
+    path: '/',
     name: 'test',
     component: () => import('@/app/desktop/modules/Test.vue')
   }
 ]
 
 const router = new Router({
-  routes: base
-  // routes: Helper.uniqueByKey(
-  //   base.concat([]), // .concat(routes),
-  //   'path'
-  // )
+  routes: Helper.uniqueByKey(
+    base.concat([]), // .concat(routes),
+    'path'
+  )
 })
 
-router.beforeEach((to, from, next) => {
-  // Auth.requireAuth(to, from, next)
-})
+// router.beforeEach((to, from, next) => {
+//   // Auth.requireAuth(to, from, next)
+// })
 // 页面跳转后回到最顶部
 router.afterEach((to, from, next) => {
   window.scrollTo(0, 0)
