@@ -4,9 +4,9 @@
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
           <div class="layout-logo"></div>
-          <div style="float: left; margin-left: 30px;">
-            <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
-          </div>
+          <!--<div style="float: left; margin-left: 30px;">-->
+            <!--<Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>-->
+          <!--</div>-->
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-navigate"></Icon>
@@ -28,7 +28,8 @@
         </Menu>
       </Header>
       <Layout>
-        <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
+        <!--<Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">-->
+        <Sider ref="side1" collapsible :collapsed-width="78" v-model="isCollapsed">
           <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
             <MenuItem name="1-1">
               <Icon type="ios-navigate"></Icon>
@@ -44,12 +45,7 @@
             </MenuItem>
           </Menu>
         </Sider>
-        <Layout :style="{padding: '0 24px 24px'}">
-          <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>Home</BreadcrumbItem>
-            <BreadcrumbItem>Components</BreadcrumbItem>
-            <BreadcrumbItem>Layout</BreadcrumbItem>
-          </Breadcrumb>
+        <Layout :style="{padding: '24px'}">
           <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
             <slot></slot>
           </Content>
