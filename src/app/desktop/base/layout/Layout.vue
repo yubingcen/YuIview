@@ -40,7 +40,7 @@ export default {
       return [
         'menu-icon',
         this.isCollapsed ? 'rotate-icon' : ''
-      ];
+      ]
     },
     menuitemClasses () {
       return [
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     collapsedSider () {
-      this.$refs.side1.toggleCollapse();
+      this.$refs.side1.toggleCollapse()
     }
   }
 }
@@ -63,10 +63,14 @@ export default {
     position: relative;
     border-radius: 4px;
     overflow: hidden;
+    height: 100%;
   }
   .layout-header-bar{
     background: #fff;
     box-shadow: 0 1px 1px rgba(0,0,0,.1);
+  }
+  .layout /deep/ .ivu-layout-has-sider {
+    height: 100%;
   }
   .layout-logo-left{
     width: 90%;
