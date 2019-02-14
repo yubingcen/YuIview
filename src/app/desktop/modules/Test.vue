@@ -1,24 +1,18 @@
 <template>
-  <div id="test">
-    <div>
-      <p>
-        If iView is successfully added to this project, you'll see an
-        <code v-text="'<Button>'"></code>
-        below
-      </p>
-      <Button type="primary">Button</Button>
-    </div>
+  <Layout>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  </Layout>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import Layout from '@base/layout/Layout'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    HelloWorld,
+    Layout
   }
 }
 </script>

@@ -10,6 +10,7 @@ module.exports = {
     config.resolve.alias
       .set('vue$', 'vue/dist/vue.esm.js')
       .set('@', resolve('src'))
+      .set('@base', resolve('src/app/desktop/base'))
   },
   devServer: {
     host: '0.0.0.0',
