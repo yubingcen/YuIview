@@ -1,3 +1,4 @@
+const devRemoteUrl = 'http://127.0.0.1:8090'
 const path = require('path')
 
 const resolve = dir => {
@@ -9,5 +10,14 @@ module.exports = {
     config.resolve.alias
       .set('vue$', 'vue/dist/vue.esm.js')
       .set('@', resolve('src'))
+  },
+  devServer: {
+    host: '0.0.0.0',
+    port: 8072,
+    proxy: {
+      '/api': {
+        target: devRemoteUrl
+      }
+    }
   }
 }
