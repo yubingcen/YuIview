@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <Layout>
-      <Header>
+      <Header class="y-layout-header">
         <Menu mode="horizontal" theme="dark" active-name="1">
           <div class="layout-logo"></div>
           <!--<div style="float: left; margin-left: 30px;">-->
@@ -99,6 +99,10 @@ export default {
 }
 .layout /deep/ .ivu-layout-sider {
   height: 100%;
+}
+.y-layout-header {
+  box-shadow: 2px 2px 5px #333333;
+  border-bottom: 1px solid #9a9a9a;
 }
 .layout-logo{
   width: 100px;
