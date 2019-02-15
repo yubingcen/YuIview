@@ -2,47 +2,39 @@
   <div class="layout">
     <Layout>
       <Header class="y-layout-header">
-        <Menu mode="horizontal" theme="dark" active-name="1">
+        <Menu mode="horizontal" theme="dark" :active-name="activeNav">
           <div class="layout-logo"></div>
           <!--<div style="float: left; margin-left: 30px;">-->
             <!--<Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>-->
           <!--</div>-->
           <div class="layout-nav">
-            <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>
-              Item 1
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>
-              Item 2
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>
-              Item 3
-            </MenuItem>
-            <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>
-              Item 4
-            </MenuItem>
+            <!--主要导航-->
+            <XLink v-for="nav in layoutConfig.navData" :key="nav.name" :to="nav.path">
+              <MenuItem :name="nav.name">
+                <Icon :type="nav.icon"></Icon>
+                {{ nav.title }}
+              </MenuItem>
+            </XLink>
+            <!-- 拓展导航 -->
+            <XLink v-for="(nav, key) in config.extNav" :key="key" :to="nav.link || key">
+              <MenuItem :name="key">
+                <Icon :type="nav.icon"></Icon>
+                {{ nav.text }}
+              </MenuItem>
+            </XLink>
           </div>
         </Menu>
       </Header>
       <Layout>
         <!--<Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">-->
         <Sider ref="side1" collapsible :collapsed-width="78" v-model="isCollapsed">
-          <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
-            <MenuItem name="1-1">
-              <Icon type="ios-navigate"></Icon>
-              <span>Option 1</span>
-            </MenuItem>
-            <MenuItem name="1-2">
-              <Icon type="ios-search"></Icon>
-              <span>Option 2</span>
-            </MenuItem>
-            <MenuItem name="1-3">
-              <Icon type="ios-settings"></Icon>
-              <span>Option 3</span>
-            </MenuItem>
+          <Menu theme="dark" width="auto" :open-names="config.openSides" :active-name="activeSide" :class="menuitemClasses">
+            <XLink :to="side.path" v-for="side in findNav(activeNav)" :key="side.name">
+              <MenuItem :name="side.name + ''">
+                <Icon :type="side.icon"></Icon>
+                <span>{{ side.title }}</span>
+              </MenuItem>
+            </XLink>
           </Menu>
         </Sider>
         <Layout :style="{padding: '24px'}">
@@ -55,10 +47,31 @@
   </div>
 </template>
 <script>
+import LayoutConfig from '@desktop/config/LayoutConfig'
+import XLink from '@base/components/XLink'
 export default {
+  name: 'y-layout',
+  components: { XLink },
+  props: {
+    config: {
+      type: Object,
+      default: function () {
+        return {
+          extNav: {},
+          activeNav: null,
+          activeSide: null,
+          openSides: [],
+          sides: null
+        }
+      }
+    },
+    title: String
+  },
   data () {
     return {
-      isCollapsed: false
+      layoutConfig: LayoutConfig,
+      isCollapsed: false,
+      currentPath: ''
     }
   },
   computed: {
@@ -73,11 +86,34 @@ export default {
         'menu-item',
         this.isCollapsed ? 'collapsed-menu' : ''
       ]
+    },
+    activeNav () {
+      return this.config.activeNav || this.findMatchItemName(this.layoutConfig.navData)
+    },
+    activeSide () {
+      return this.config.activeSide || this.findMatchItemName(this.layoutConfig.navData)
     }
   },
   methods: {
     collapsedSider () {
       this.$refs.side1.toggleCollapse()
+    },
+    findMatchItemName (items) {
+      const routerName = this.$route.name
+      let find = items.filter(el => { return el.name === routerName })
+      if (find[0]) {
+        return find[0].name
+      } else {
+        return ''
+      }
+    },
+    findNav (name) {
+      let find = this.layoutConfig.navData.filter(el => { return el.name === name })
+      if (find[0]) {
+        return find[0].children
+      } else {
+        return []
+      }
     }
   }
 }
